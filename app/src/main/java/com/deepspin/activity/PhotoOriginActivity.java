@@ -28,7 +28,7 @@ import java.io.IOException;
 
 public class PhotoOriginActivity extends AppCompatActivity {
     private ImageView mImageView;
-    private String UPLOAD_URL = DeepSpinStatics.SERVER_URL + "fileupload.php";
+    private String mUploadUrl = "";
     private ProgressDialog mDialog;
 
     @Override
@@ -51,7 +51,7 @@ public class PhotoOriginActivity extends AppCompatActivity {
 
         mImageView = findViewById(R.id.imageview);
         mDialog = new ProgressDialog(this);
-
+        mUploadUrl = DeepSpinApp.getServerUrl() + "fileupload.php";
         setCapturedImage();
     }
 
@@ -104,7 +104,7 @@ public class PhotoOriginActivity extends AppCompatActivity {
             }
         };
 
-        SimpleMultiPartRequest smr = new SimpleMultiPartRequest(Request.Method.POST, UPLOAD_URL, response, errorListener);
+        SimpleMultiPartRequest smr = new SimpleMultiPartRequest(Request.Method.POST, mUploadUrl, response, errorListener);
 
         smr.addFile("image", DeepSpinApp.getCurrTakenPicPath());
         DeepSpinApp.getInstance().addToRequestQueue(smr);

@@ -1,6 +1,8 @@
 package com.deepspin;
 
 import android.app.Application;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.text.TextUtils;
 
 import com.android.volley.Request;
@@ -13,6 +15,7 @@ public class DeepSpinApp extends Application {
     private static volatile com.deepspin.DeepSpinApp sInstance;
     private static RequestQueue sRequestQueue;
     private static int mCurrImageOrientation = 1;
+    private static String mServerUrl = "";
 
     @Override
     public void onCreate() {
@@ -61,5 +64,20 @@ public class DeepSpinApp extends Application {
     }
     public static void setCurrTakenPicPath(String path) {
         mCurrTakenPicPath = path;
+    }
+    public static String getServerUrl() {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(sInstance);
+        String url = preferences.getString("SERVER_URL", "");
+
+        return url;
+    }
+    public static void setServerUrl(String url) {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(sInstance);
+        SharedPreferences.Editor editor = preferences.edit();
+        if(!url.substring(url.length() - 1).equals("/")) {
+            url += "/";
+        }
+        editor.putString("SERVER_URL",url);
+        editor.apply();
     }
 }

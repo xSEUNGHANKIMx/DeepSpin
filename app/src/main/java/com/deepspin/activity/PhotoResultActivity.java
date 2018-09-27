@@ -28,7 +28,7 @@ public class PhotoResultActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         mImageView = findViewById(R.id.imageview);
-        mImageUri = DeepSpinStatics.SERVER_IP + getIntent().getStringExtra(DeepSpinStatics.EXTRA_RESULT_URI).substring(2);
+        mImageUri = DeepSpinApp.getServerUrl() + getIntent().getStringExtra(DeepSpinStatics.EXTRA_RESULT_URI).substring(2);
         setResultImage();
     }
 

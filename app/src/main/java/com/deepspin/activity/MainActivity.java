@@ -2,7 +2,6 @@ package com.deepspin.activity;
 
 import android.Manifest;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
@@ -12,10 +11,10 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.FileProvider;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageButton;
 
 import com.deepspin.DeepSpinApp;
@@ -31,6 +30,7 @@ public class MainActivity extends AppCompatActivity implements
         ActivityCompat.OnRequestPermissionsResultCallback {
 
     private ImageButton mTakePictureBtn;
+    private EditText mEditAddress;
     private File mImgFile = null;
     private Context mContext;
     private DeepSpinApp mApp;
@@ -39,6 +39,7 @@ public class MainActivity extends AppCompatActivity implements
             Manifest.permission.WRITE_EXTERNAL_STORAGE,
             Manifest.permission.CAMERA
     };
+    private String mServerUrl = "";
 
     private static final int REQUEST_CODE_PERMISSION = 1;
 
@@ -50,6 +51,13 @@ public class MainActivity extends AppCompatActivity implements
         checkPermissions();
 
         setContentView(R.layout.activity_main);
+        mServerUrl = DeepSpinApp.getServerUrl();
+        if(mServerUrl.isEmpty()) {
+            DeepSpinApp.setServerUrl(DeepSpinStatics.SERVER_URL);
+            mServerUrl = DeepSpinStatics.SERVER_URL;
+        }
+        mEditAddress = findViewById(R.id.ipaddress);
+        mEditAddress.setText(mServerUrl);
         mTakePictureBtn = findViewById(R.id.button_image);
         mApp = DeepSpinApp.getInstance();
 
@@ -87,7 +95,8 @@ public class MainActivity extends AppCompatActivity implements
     }
 
     public void takePicture(View view) {
-        Intent intent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+        DeepSpinApp.setServerUrl(mEditAddress.getText().toString());
+
         try {
             mImgFile = getOutputMediaFile();
         } catch (IOException ex) {
@@ -96,6 +105,7 @@ public class MainActivity extends AppCompatActivity implements
         Uri uri = FileProvider.getUriForFile(this, "com.deepspin", mImgFile);
         mApp.setCurrTakenPicPath(mImgFile.getAbsolutePath());
 
+        Intent intent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
         intent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
         startActivityForResult(intent, DeepSpinStatics.RESULT_CAPTURE);
     }

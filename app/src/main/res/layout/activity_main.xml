@@ -102,6 +102,26 @@
         android:layout_above="@+id/button_image"/>
 -->
 
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:background="#fff"
+        android:padding="20dp"
+        android:layout_above="@+id/button_image"
+        android:layout_marginBottom="100dp">
+
+        <EditText
+            android:id="@+id/ipaddress"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:singleLine="true"
+            android:drawableTint="#FF4081"
+            android:hint="SERVER URL" />
+    </android.support.design.widget.TextInputLayout>
+
     <ImageButton
         android:id="@+id/button_image"
         android:layout_width="100dp"

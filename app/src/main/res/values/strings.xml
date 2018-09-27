@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Depp Spin</string>
+    <string name="title_activity_origin_photo">Original</string>
+    <string name="title_activity_photo_result">Result</string>
+</resources>

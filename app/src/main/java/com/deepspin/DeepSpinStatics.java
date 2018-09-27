@@ -2,7 +2,8 @@ package com.deepspin;
 
 public class DeepSpinStatics {
 
-    final public static String SERVER_IP = "http://75.80.129.141:7912/";
+    final public static String SERVER_IP = "75.80.129.141:7912";
+    final public static String SERVER_URL = "http://" + SERVER_IP + "/";
 
     final public static int RESULT_CAPTURE = 1001;
     final public static int RESULT_CAPTURE_RESULT = 1002;
